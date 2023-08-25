@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #117189;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 90vh;
+        padding: 0 30px;
+      }
+
+      .image {
+        width: 500px;
+        height: 85%;
+        max-height: 750px;
+        object-fit: cover;
+        object-position: right;
+        transform: scaleX(-1);
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px rgb(0 0 0 / 20%);
+      }
+
+      .form-container {
+        background: white;
+        padding: 30px 50px;
+        height: 75%;
+        max-height: 750px;
+        border-radius: 0 7px 7px 0;
+        color: #363636;
+        overflow-y: scroll;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-container__header {
+        color: #117189;
+        margin-bottom: 20px;
+      }
+
+      .form__input, .form-select__input {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid lightgrey;
+        margin-top: 10px;
+        margin-bottom: 15px;
+      }
+      
+      .form__input:focus, .form-select__input:focus {
+        outline: none;
+        border-color: #117189;
+      }
+
+      .form-select__input {
+        cursor: pointer;
+      }
+
+      .form__btn {
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        background: #117189;
+        color: white;
+        text-transform: uppercase;
+        margin-top: 20px;
+        cursor: pointer;
+      }
+
+      .predicted-rent {
+        margin: 20px 0;
+        text-align: center;
+      }
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding-bottom: 25px;
+      }
+      .footer a {
+        color: #dff9ff;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      @media only screen and (max-width: 600px) {
+        .image {
+          display: none;
+        }
+        .form-container {
+          border-radius: 7px;
+        }
+      }
+    </style>
+    <title>Lagos Rent Prediction</title>
+  </head>
+  <body>
+    <div class="container">
+      <img class="image" src="/static/home.jpg" alt="house image">
+      
+      <div class="form-container">
+        <h1 class="form-container__header">Lagos Rent Prediction</h1>
+        <form class="form" method="POST" action="/predict">
+          
+          <label class="form__label" for="Neighborhood">Location:</label>
+          <select class="form-select__input" id="Neighborhood" name="Neighborhood">
+            {% for Neighborhood in Neighborhoods %}
+            <option value="{{ Neighborhood }}">{{ Neighborhood }}</option>
+            {% endfor %}
+          </select>
+        
+          <label class="form__label" for="bedrooms">Number of Bedrooms:</label>
+          <input class="form__input"type="number" id="bedrooms" name="bedrooms" min="1" max="6" required>
+          
+          <label class="form__label" for="bathrooms">Number of Bathrooms:</label>
+          <input class="form__input"type="number" id="bathrooms" name="bathrooms" min="1" max="6" required>
+          
+          <label class="form__label" for="toilets">Number of Toilets:</label>
+          <input class="form__input"type="number" id="toilets" name="toilets" min="1" max="6" required>
+          
+          <label class="form__label" for="furnished">Furnished:</label>
+          <select class="form-select__input" id="furnished" name="furnished">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+        
+        <label class="form__label" for="newly_built">Newly Built:</label>
+        <select class="form-select__input" id="newly_built" name="newly_built">
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+        
+        <label class="form__label" for="serviced">Serviced:</label>
+        <select class="form-select__input" id="serviced" name="serviced">
+          <option value="1">Yes</option>
+          <option value="0">No</option>
+        </select>
+        
+        <input class="form__btn" type="submit" value="Predict Rent">
+      </form>
+
+      <div class="predicted-rent" id="predictedRent"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <a href="https://github.com/PE-Ibeabcuhi/Lagos-Rent-Prediction">Github Repo</a>
+    <a href="https://peteribeabuchi.hashnode.dev/predicting-house-prices-in-lagos-state-with-python">Read about Lagos rent prediction</a>
+  </footer>
+
+
+    <!-- Add the JavaScript code -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector(".form");
+        const predictedRentDiv = document.getElementById("predictedRent");
+        form.addEventListener("submit", function(event) {
+          event.preventDefault(); // Prevent default form submission
+          
+          const formData = new FormData(form);
+          
+          // Create an XMLHttpRequest object
+          const xhr = new XMLHttpRequest();
+          
+          // Configure the request
+          xhr.open("POST", "/predict", true);
+          xhr.responseType = "text";
+          
+          xhr.onload = function() {
+            if (xhr.status === 200) {
+              // Display the predicted rent in the div element
+              predictedRentDiv.innerText = `Your estimated rent is ${xhr.responseText}`;
+              alert(`Your estimated rent is ${predictedRentDiv.innerText}`);
+            } else {
+              console.error("Request failed:", xhr.statusText);
+            }
+          };
+    
+          xhr.onerror = function() {
+            console.error("Request error:", xhr.statusText);
+          };
+    
+          xhr.send(formData);
+        });
+      });
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
