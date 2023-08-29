@@ -2,15 +2,12 @@
 import pandas as pd
 from flask import Flask, render_template, request
 import pickle
-import joblib
-from joblib import load
 import sklearn
 import xgboost as xgb
-from xgboost import XGBClassifier, XGBRegressor
+from xgboost import XGBRegressor
 from sklearn.metrics import r2_score
 
 
-app = Flask(__name__)
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 # Load the saved prediction model
