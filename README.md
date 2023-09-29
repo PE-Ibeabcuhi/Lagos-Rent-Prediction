@@ -15,5 +15,9 @@ The libraries used in this project include:
 ## Results
 The results of the Lagos Rent Prediction model demonstrate its ability to provide accurate rent price estimates. The model's performance is evaluated based on the R2-Square metrics, and its predictions can help both tenants and landlords make well-informed decisions.
 
-You can read about the project [here](https://peteribeabuchi.hashnode.dev/predicting-house-prices-in-lagos-state-with-python).
+You can read about the project [here](https://peteribeabuchi.hashnode.dev/predicting-house-prices-in-lagos-state-with-python). 
+
+## The webpage:
+The webpage for the project was built with Python Flask, HTML, and JavaScript. You can visit the webpage [here!!](https://lnkd.in/dzQwh9uk)
+
 
