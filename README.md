@@ -1,3 +1,6 @@
+
+<img src="https://paper-attachments.dropboxusercontent.com/s_4EF9DFF6233C3946A0D5B47AF09B7CF8888668A922EE2DF87AD99F4779271545_1696000477525_Lagos+rent+image.png"  width="1000" height="600">
+
 ## Lagos Rent Prediction
 Predicting rental prices is essential for both tenants and landlords to make informed decisions. This project aims to build a machine-learning model that can predict house rental prices in Lagos State. By analyzing various features such as location, number of bedrooms, and amenities, the model provides valuable insights into rent pricing trends.
 
