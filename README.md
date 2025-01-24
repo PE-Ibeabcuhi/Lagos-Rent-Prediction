@@ -23,4 +23,5 @@ You can read about the project [here](https://peteribeabuchi.hashnode.dev/predic
 ## The webpage:
 The webpage for the project was built with Python Flask, HTML, and JavaScript. You can visit the webpage [here!!](https://lnkd.in/dzQwh9uk)
 
+https://github.com/user-attachments/assets/ab65201a-fa46-4c00-a8ca-9c653320af94
 
